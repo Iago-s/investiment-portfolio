@@ -1,3 +1,3 @@
-# Investimenst portfolios
+# Investiment portfolios
 
 Nodejs, mysql, reactjs
