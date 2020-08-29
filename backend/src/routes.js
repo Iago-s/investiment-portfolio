@@ -6,7 +6,8 @@ const UserController = require('./controllers/UserController');
 routes.get('/', (request, response) => {
   response.send('<h1>Welcome investiment portfolios</h1>');
 });
-routes.post('/', UserController.register);
+routes.post('/', UserController.login);
+routes.post('/register', UserController.register);
 routes.delete('/:id', UserController.delete);
 
 module.exports = routes;

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import api from '../../services/api';
 
 import './styles.css';
 
@@ -10,6 +13,27 @@ import LinkNavigation from '../../components/LinkNavigation';
 import Input from '../../components/Input';
 
 const WelcomePage = () => {
+  const history = useHistory();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    const data = { email, password };
+
+    const response = await api.post('http://localhost:3333/', data);
+
+    if(response.data.error) {
+      setEmail('');
+      setPassword('');
+
+      return alert('Usuario ou senha errado, tente novamente');
+    }
+
+    history.push('/portfolio', response.data.user);
+  }
   return(
     <div className="container">
       <div className="img-container">
@@ -17,12 +41,18 @@ const WelcomePage = () => {
       </div>
       <div className="form-container">
         <Logo />
-        <form >
+        <form onSubmit={handleLogin}>
           <p>Email</p>
-          <Input type="email" />
+          <Input 
+            type="email" 
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
           <p>Senha</p>
           <Input 
             type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <Button text="Entrar" />
         </form>
