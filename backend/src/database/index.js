@@ -13,4 +13,3 @@ User.associate(connection.models);
 Active.associate(connection.models);
 
 module.exports = connection;
-
