@@ -20,7 +20,7 @@ const Register = () => {
 
     const data = { email, password };
 
-    const response = await api.post('http://localhost:3333/register', data);
+    const response = await api.post('http://localhost:3333/cadastrar', data);
 
     if(response.data.error) {
       setEmail('');

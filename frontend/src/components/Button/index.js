@@ -4,7 +4,10 @@ import './styles.css';
 
 const Button = (props) => {
   return(
-    <button type="submit">{props.text}</button>
+    <button 
+      className="button-component"
+      type="submit"
+    >{props.text}</button>
   );
 }
 

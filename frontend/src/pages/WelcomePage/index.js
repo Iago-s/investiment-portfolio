@@ -56,7 +56,7 @@ const WelcomePage = () => {
           />
           <Button text="Entrar" />
         </form>
-        <p className="register">Novo no site? <LinkNavigation to="/register" text="Cadastre-se"/></p>
+        <p className="register">Novo no site? <LinkNavigation to="/cadastrar" text="Cadastre-se"/></p>
       </div>
     </div>
   );

@@ -1,0 +1,184 @@
+.container-wallet {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #F5F5F5;
+
+  margin: 0;
+}
+
+.container-wallet .header-container-wallet {
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #109B57;
+}
+
+.container-wallet .header-container-wallet header {
+  width: 80%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 0;
+  margin: 10px;
+}
+
+.icons {
+  justify-content: center;
+  align-items: center;
+  
+  margin: 0 10px;
+
+  border: none;
+  
+  background-color: transparent;
+}
+
+.icons:hover {
+  opacity: 0.8;
+}
+
+.container-rebalance {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #F5F5F5;
+}
+
+.container-rebalance .container-actives {
+  width: 80%;
+
+  margin-top: 10px;
+  padding: 0 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 8px;
+
+  background-color: #F5F5F5;
+}
+
+.container-rebalance .container-actives .input-active {
+  height: 30px;
+
+  border: 1px solid #E8EAF2;
+
+  text-align: center;
+}
+
+.add-button {
+  width: 145px;
+  height: 34px;
+
+  margin: 0;
+
+  border: 1px solid #E8EAF2;
+
+  font-size: 12px;
+  font-weight: bold;
+  color: #F5F5F5;
+  text-align: center;
+
+  cursor: pointer;
+
+  background-color: #109B57;
+}
+
+.add-button:hover {
+  opacity: 0.8;
+}
+
+.container-spreadsheet {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #F5F5F5;
+}
+
+.container-spreadsheet .container-actives {
+  width: 80%;
+
+  margin-top: 10px;
+  padding: 0 20px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  border-radius: 8px;
+
+  background-color: #F5F5F5;
+}
+
+.container-spreadsheet .container-actives  p {
+  font-size: 16px;
+  font-weight: bold;
+  
+  padding: 0 10px;
+}
+
+.container-spreadsheet .container-actives .input-spreadsheet {
+  height: 30px;
+
+  border: 1px solid #E8EAF2;
+
+  text-align: center;
+}
+
+.container-map-actives {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #F5F5F5;
+}
+
+.map-actives {
+  width: 80%;
+
+  margin-top: 10px;
+  padding: 0 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 8px;
+
+  background-color: #F5F5F5;
+}
+
+.input-active {
+  height: 30px;
+
+  border: 1px solid #E8EAF2;
+
+  text-align: center;
+}

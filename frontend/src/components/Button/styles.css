@@ -1,4 +1,4 @@
-button {
+.button-component {
   height: 40px;
 
   margin-top: 16px;
@@ -15,6 +15,6 @@ button {
   background-color: #109B57;
 }
 
-button:hover {
+.button-component:hover {
   opacity: 0.8;
 }
