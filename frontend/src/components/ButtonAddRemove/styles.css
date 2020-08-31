@@ -1,0 +1,21 @@
+.buttonAddRemove-component {
+  width: 145px;
+  height: 34px;
+
+  margin: 0;
+
+  border: 1px solid #E8EAF2;
+
+  font-size: 12px;
+  font-weight: bold;
+  color: #F5F5F5;
+  text-align: center;
+
+  cursor: pointer;
+
+  background-color: #109B57;
+}
+
+.buttonAddRemove-component:hover {
+  opacity: 0.8;
+}

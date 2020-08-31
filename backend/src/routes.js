@@ -11,6 +11,9 @@ routes.post('/', UserController.login);
 routes.post('/cadastrar', UserController.register);
 
 
-routes.delete('/:id', UserController.delete);
+routes.post('/carteira', UserController.getPrice);
+
+routes.get('/actives/:user_id', UserController.listActives);
+routes.post('/addActive/:user_id', UserController.addActive);
 
 module.exports = routes;
