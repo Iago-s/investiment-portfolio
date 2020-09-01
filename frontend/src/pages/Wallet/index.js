@@ -9,16 +9,15 @@ import ButtonAddRemove from '../../components/ButtonAddRemove';
 import api from '../../services/api';
 
 const Wallet = (user) => {
-  const user_id = user.location.state.id;
-
   const styleIcons = {
     color: "#F5F5F5",
   }
+  
+  const user_id = user.location.state.id;
+
+  const [updatePage, setUpdatePage] = useState(0); 
 
   const [actives, setActives] = useState([]);
-
-  const [cash, setCash] = useState(0);
-  const [patrimony, setPatrimony] = useState(0);
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -27,26 +26,27 @@ const Wallet = (user) => {
   const [percentageGoal, setPercentageGoal] = useState('');
   const [currentPercentage, setCurrentPercentage] = useState(0);
 
-  useEffect(async () => {
-    const response = await api.get(`http://localhost:3333/actives/${user_id}`);
-    console.log(response);
-    setActives(response.data);
-  }, [actives.amount]);
+  const [patrimony, setPatrimony] = useState(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await api.get(`http://localhost:3333/actives/${user_id}`);
+
+      setPatrimony(response.data.patrimony);
+      setActives(response.data.actives);
+    }
+    
+    fetchData();
+  }, [updatePage]);
 
   async function handleAddActive(e) {
     e.preventDefault();
 
     if(name === '' || percentageGoal === '') {
-      return alert('Preencha os três campos.');
+      return alert('Preencha o codigo, quantidade, e objetivo percentual do ativo.');
     }
 
-    console.log('Name: ',name, 'Price: ', price,
-      'Amount: ', amount,'PatrimonyHere: ', patrimonyHere, 
-      'PercentageGoal: ', percentageGoal, 
-      'CurrentPercentage: ', currentPercentage
-    );
-    console.log('antes do parseInt',typeof amount, typeof percentageGoal);
-
+    //Pegar preço ativo
     const response = await api.post('http://localhost:3333/carteira', { name });
 
     if(response.data.error) {
@@ -60,7 +60,7 @@ const Wallet = (user) => {
       return alert('Digite um codigo de ativo valido.');
     }
 
-    console.log(response.data.price);
+    console.log(currentPercentage);
 
     const data = {
       name: name,
@@ -80,7 +80,25 @@ const Wallet = (user) => {
 
     await api.post(`http://localhost:3333/addActive/${user_id}`, data);
 
+    setUpdatePage(updatePage + 1);
+
     return alert('Ativo adicionado');
+  };
+
+  async function handleUpdateActive({ name, price, amount, patrimonyHere, percentageGoal, currentPercentage, active_id }) {
+    const data = {
+      name, 
+      price, 
+      amount, 
+      patrimonyHere, 
+      percentageGoal, 
+      currentPercentage, 
+      active_id
+    };
+
+    const response = await api.post('http://localhost:3333/atualizar-ativo/', data);
+
+    setUpdatePage(updatePage + 1);
   }
 
   return(
@@ -146,13 +164,12 @@ const Wallet = (user) => {
           <p>Patrimonio</p>
           <input 
             className="input-spreadsheet"
-            value={patrimony}
+            readOnly={true}
+            value={(patrimony).toFixed(2)}
           />
           <p>Caixa</p>
           <input 
             className="input-spreadsheet"
-            value={cash}
-            onChange={e => setCash(e.target.value)}
           />
         </div>
       </div>
@@ -178,11 +195,23 @@ const Wallet = (user) => {
                   placeholder="Quantidade"
                   defaultValue={value.amount}
                   onChange={event => {
-                    value.amount = event.target.value
+                    value.amount = event.target.value;
 
-                    console.log('amount:', value.amount, 'price:', value.price, 'patrimonyHere', value.patrimonyHere);
                     value.patrimonyHere = value.price * value.amount;
-                    console.log('patrimonyHere', value.patrimonyHere);
+                    console.log('patrimony', patrimony)                    ;
+                    value.currentPercentage = (value.patrimonyHere * 100) / patrimony;
+
+                    const data = { 
+                      name: value.name,
+                      price: value.price,
+                      amount: value.amount,
+                      patrimonyHere: value.patrimonyHere,
+                      percentageGoal: value.percentageGoal,
+                      currentPercentage: value.currentPercentage,
+                      active_id: value.id,
+                    };
+
+                    handleUpdateActive(data);
                   }}
                 />
                 <input 
@@ -199,13 +228,22 @@ const Wallet = (user) => {
                 <input 
                   className="input-active"
                   placeholder="Total %"
-                  value={value.currentPercentage}
+                  value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2)}
                   readOnly={true}
                 />
-                <ButtonAddRemove text="Apagar" color="red"/>
+                <ButtonAddRemove 
+                  text="Apagar" 
+                  color="red" 
+                  onClick={async () => {
+                    await api.delete(`http://localhost:3333/apagar-ativo/${value.id}`);
+
+                    setUpdatePage(updatePage + 1);
+                  }}
+                />
               </div>
             </div>
           );
+          
         })
       }
     </div>
