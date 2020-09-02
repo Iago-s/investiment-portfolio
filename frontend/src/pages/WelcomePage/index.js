@@ -26,7 +26,6 @@ const WelcomePage = () => {
     const response = await api.post('http://localhost:3333/', data);
 
     if(response.data.error) {
-      setEmail('');
       setPassword('');
 
       return alert('Usuario ou senha errado, tente novamente');

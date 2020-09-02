@@ -24,9 +24,12 @@ const Wallet = (user) => {
 
   const [actives, setActives] = useState([]);
 
+  const nameRF = "RF";
+  const [priceRF, setPriceRF] = useState('');
+  const [percentageGoalRF, setPercentageGoalRF] = useState('');
+
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
-  const [priceRf, setPriceRf] = useState('');
   const [amount, setAmount] = useState('');
   const [patrimonyHere, setPatrimonyHere] = useState(0);
   const [percentageGoal, setPercentageGoal] = useState('');
@@ -68,8 +71,6 @@ const Wallet = (user) => {
       return alert('Digite um codigo de ativo valido.');
     }
 
-    console.log(currentPercentage);
-
     const data = {
       name: name,
       price: response.data.price,
@@ -93,6 +94,37 @@ const Wallet = (user) => {
     return alert('Ativo adicionado');
   };
 
+  async function handleAddRF(e) {
+    e.preventDefault();
+
+    if(priceRF === '' || percentageGoalRF === '') {
+      return alert('Preencha o total aplicado R$ e objetivo percentual em renda fixa.');
+    }
+
+    console.log('dados rf', nameRF, priceRF, amount, patrimonyHere, percentageGoalRF, currentPercentage);
+    console.log(typeof percentageGoalRF);
+
+
+    const data = {
+      name: nameRF,
+      price: eval(`${priceRF} + 0`),
+      amount: 0,
+      patrimonyHere: eval(`${priceRF} + 0`),
+      percentageGoal: eval(`${percentageGoalRF} + 0`),
+      currentPercentage,
+    }
+    console.log(data);
+
+    setPriceRF('');
+    setPercentageGoalRF('');
+    
+    await api.post(`http://localhost:3333/addActive/${user_id}`, data);
+
+    setUpdatePage(updatePage + 1);
+
+    return alert('Ativo adicionado');
+  }
+
   async function handleUpdateActive({ name, price, amount, patrimonyHere, percentageGoal, currentPercentage, active_id }) {
     const data = {
       name, 
@@ -109,11 +141,29 @@ const Wallet = (user) => {
     setUpdatePage(updatePage + 1);
   }
 
+  async function handleUpdateRF({ name, price, amount, patrimonyHere, percentageGoal, currentPercentage, active_id }) {
+    const data = {
+      name, 
+      price, 
+      amount, 
+      patrimonyHere, 
+      percentageGoal, 
+      currentPercentage, 
+      active_id
+    };
+
+    await api.post('http://localhost:3333/atualizar-ativo/', data);
+
+    setUpdatePage(updatePage + 1);
+  }
+
+
   function handleLogout(e) {
     e.preventDefault();
 
     history.push('/');
   }
+
 
   return(
     <div className="container-wallet">
@@ -162,8 +212,52 @@ const Wallet = (user) => {
             readOnly={true}
           />
           <ButtonAddRemove 
-            text="Adicionar"
+            text="Adicionar RV"
             onClick={handleAddActive}
+          />
+        </div>
+      </div>
+
+      <div className="container-rebalance">
+        <div className="container-actives">
+          <InputsSpreadsheet 
+            id="rf"
+            placeholder="RF"
+            required={true}
+            value={nameRF}
+            readOnly={true}
+          />
+          <InputsSpreadsheet 
+            placeholder="Total aplicado R$"
+            value={priceRF}
+            onChange={event => setPriceRF(event.target.value)}
+          />
+          <InputsSpreadsheet 
+            placeholder="Quantidade"
+            type="number"
+            required
+            readOnly={true}
+          />
+          <InputsSpreadsheet 
+            placeholder="Total R$"
+            value={patrimonyHere}
+            readOnly={true}
+          />
+          <InputsSpreadsheet 
+            placeholder="Objetivo"
+            type="number"
+            required
+            value={percentageGoalRF}
+            onChange={event => setPercentageGoalRF(event.target.value)}
+          />
+          <InputsSpreadsheet 
+            placeholder="Total %"
+            value={currentPercentage}
+            readOnly={true}
+          />
+          <ButtonAddRemove 
+            text="Adicionar RF"
+            onClick={handleAddRF}
           />
         </div>
       </div>
@@ -200,87 +294,223 @@ const Wallet = (user) => {
           return(
             <div key={index} className="container-map-actives">
               <div className="map-actives" key={index}>
-                <InputsSpreadsheet 
-                  placeholder="Código"
-                  value={value.name}
-                  readOnly={true}
-                />
-                <InputsSpreadsheet
-                  placeholder="Preço"
-                  value={
-                    Intl.NumberFormat('PT-BR', {
-                      style: 'currency',
-                      currency: 'BRL'
-                    }).format(value.price)
-                  }
-                  readOnly={true}
-                />
-                <InputsSpreadsheet 
-                  placeholder="Quantidade"
-                  defaultValue={value.amount}
-                  onChange={event => {
-                    value.amount = event.target.value;
+                {
+                  value.name === "RF" ? 
+                    <>
+                      <InputsSpreadsheet 
+                        placeholder="Código"
+                        value={value.name}
+                        readOnly={true}
+                      />  
+                      <InputsSpreadsheet
+                        placeholder="Preço"
+                        defaultValue={value.price}
+                        onChange={event => {
+                          value.price = event.target.value;
+                          value.patrimonyHere = value.price;
+                          value.currentPercentage = (value.patrimonyHere * 100) / patrimony;
 
-                    value.patrimonyHere = value.price * value.amount;
-                    console.log('patrimony', patrimony)                    ;
-                    value.currentPercentage = (value.patrimonyHere * 100) / patrimony;
+                          const data = { 
+                            name: value.name,
+                            price: value.price,
+                            amount: value.amount,
+                            patrimonyHere: value.patrimonyHere,
+                            percentageGoal: value.percentageGoal,
+                            currentPercentage: value.currentPercentage,
+                            active_id: value.id,
+                          };
 
-                    const data = { 
-                      name: value.name,
-                      price: value.price,
-                      amount: value.amount,
-                      patrimonyHere: value.patrimonyHere,
-                      percentageGoal: value.percentageGoal,
-                      currentPercentage: value.currentPercentage,
-                      active_id: value.id,
-                    };
+                          handleUpdateRF(data);
+                        }}
+                      />
+                      <InputsSpreadsheet 
+                        placeholder="Quantidade"
+                        defaultValue={value.amount}
+                        readOnly={true}
+                      />
+                      <InputsSpreadsheet 
+                        placeholder="Total R$"
+                        value={value.patrimonyHere}
+                        readOnly={true}
+                      />
+                      {
+                        value.percentageGoal === 0 ?
+                          <InputsSpreadsheet 
+                            placeholder="Objetivo"
+                            defaultValue={value.percentageGoal}
+                            onChange={event => {
+                              value.percentageGoal = event.target.value;
 
-                    handleUpdateActive(data);
-                  }}
-                />
-                <InputsSpreadsheet 
-                  placeholder="Total R$"
-                  value={
-                    Intl.NumberFormat('PT-BR', {
-                      style: 'currency',
-                      currency: 'BRL'
-                    }).format(value.patrimonyHere)
-                  }
-                  readOnly={true}
-                />
-                <InputsSpreadsheet 
-                  placeholder="Objetivo"
-                  defaultValue={value.percentageGoal}
-                  onChange={event => {
-                    value.percentageGoal = event.target.value;
+                              const data = { 
+                                name: value.name,
+                                price: value.price,
+                                amount: value.amount,
+                                patrimonyHere: value.patrimonyHere,
+                                percentageGoal: value.percentageGoal,
+                                currentPercentage: value.currentPercentage,
+                                active_id: value.id,
+                              };
 
-                    const data = { 
-                      name: value.name,
-                      price: value.price,
-                      amount: value.amount,
-                      patrimonyHere: value.patrimonyHere,
-                      percentageGoal: value.percentageGoal,
-                      currentPercentage: value.currentPercentage,
-                      active_id: value.id,
-                    };
+                              handleUpdateRF(data);
+                            }}
+                            color="#FAF2AA"
+                          /> :
+                          <InputsSpreadsheet 
+                            placeholder="Objetivo"
+                            defaultValue={value.percentageGoal}
+                            onChange={event => {
+                              value.percentageGoal = event.target.value;
 
-                    handleUpdateActive(data);
-                  }}
-                />
-                <InputsSpreadsheet 
-                  placeholder="Total %"
-                  value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2) + " %"}
-                  readOnly={true}
-                />
-                <ButtonAddRemove 
-                  text="Apagar" 
-                  color="red"
-                  onClick={async () => {
-                    await api.delete(`http://localhost:3333/apagar-ativo/${value.id}`);
+                              const data = { 
+                                name: value.name,
+                                price: value.price,
+                                amount: value.amount,
+                                patrimonyHere: value.patrimonyHere,
+                                percentageGoal: value.percentageGoal,
+                                currentPercentage: value.currentPercentage,
+                                active_id: value.id,
+                              };
 
-                    setUpdatePage(updatePage + 1);
-                  }}
-                />
+                              handleUpdateRF(data);
+                            }}
+                          />
+                      }
+                      
+                      {
+                        value.currentPercentage < value.percentageGoal ?
+                          <InputsSpreadsheet 
+                            placeholder="Total %"
+                            value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2) + " %"}
+                            readOnly={true}
+                            color="#F79499"
+                            fontColor="#F5F5F5"
+                          /> :
+                          <InputsSpreadsheet 
+                            placeholder="Total %"
+                            value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2) + " %"}
+                            readOnly={true}
+                            color="#9AE4C3"
+                            fontColor="#F5F5F5"
+                          />
+                      }
+                      <ButtonAddRemove 
+                        text="Apagar" 
+                        color="red"
+                        onClick={async () => {
+                          await api.delete(`http://localhost:3333/apagar-ativo/${value.id}`);
+
+                          setUpdatePage(updatePage + 1);
+                        }}
+                      /> 
+                    </> :
+                    <>
+                      <InputsSpreadsheet 
+                        placeholder="Código"
+                        value={value.name}
+                        readOnly={true}
+                      />
+                      <InputsSpreadsheet
+                        placeholder="Preço"
+                        value={value.price}
+                        readOnly={true}
+                      />
+                      <InputsSpreadsheet 
+                        placeholder="Quantidade"
+                        defaultValue={value.amount}
+                        onChange={event => {
+                          value.amount = event.target.value;
+
+                          value.patrimonyHere = value.price * value.amount;
+                          console.log('patrimony', patrimony)                    ;
+                          value.currentPercentage = (value.patrimonyHere * 100) / patrimony;
+
+                          const data = { 
+                            name: value.name,
+                            price: value.price,
+                            amount: value.amount,
+                            patrimonyHere: value.patrimonyHere,
+                            percentageGoal: value.percentageGoal,
+                            currentPercentage: value.currentPercentage,
+                            active_id: value.id,
+                          };
+
+                          handleUpdateActive(data);
+                        }}
+                      />
+                      <InputsSpreadsheet 
+                        placeholder="Total R$"
+                        value={value.patrimonyHere}
+                        readOnly={true}
+                      />
+                      {
+                        value.percentageGoal === 0 ?
+                          <InputsSpreadsheet 
+                            placeholder="Objetivo"
+                            defaultValue={value.percentageGoal}
+                            onChange={event => {
+                              value.percentageGoal = event.target.value;
+
+                              const data = { 
+                                name: value.name,
+                                price: value.price,
+                                amount: value.amount,
+                                patrimonyHere: value.patrimonyHere,
+                                percentageGoal: value.percentageGoal,
+                                currentPercentage: value.currentPercentage,
+                                active_id: value.id,
+                              };
+
+                              handleUpdateActive(data);
+                            }}
+                            color="#FAF2AA"
+                          /> :
+                          <InputsSpreadsheet 
+                            placeholder="Objetivo"
+                            defaultValue={value.percentageGoal}
+                            onChange={event => {
+                              value.percentageGoal = event.target.value;
+
+                              const data = { 
+                                name: value.name,
+                                price: value.price,
+                                amount: value.amount,
+                                patrimonyHere: value.patrimonyHere,
+                                percentageGoal: value.percentageGoal,
+                                currentPercentage: value.currentPercentage,
+                                active_id: value.id,
+                              };
+
+                              handleUpdateActive(data);
+                            }}
+                          />
+                      }
+                      
+                      {
+                        value.currentPercentage < value.percentageGoal ?
+                          <InputsSpreadsheet 
+                            placeholder="Total %"
+                            value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2) + " %"}
+                            readOnly={true}
+                            color="#F79499"
+                          /> :
+                          <InputsSpreadsheet 
+                            placeholder="Total %"
+                            value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2) + " %"}
+                            readOnly={true}
+                            color="#9AE4C3"
+                          />      
+                      }
+                      <ButtonAddRemove 
+                        text="Apagar" 
+                        color="red"
+                        onClick={async () => {
+                          await api.delete(`http://localhost:3333/apagar-ativo/${value.id}`);
+
+                          setUpdatePage(updatePage + 1);
+                        }}
+                      />
+                    </>
+                }
               </div>
             </div>
           );
@@ -300,7 +530,13 @@ const Wallet = (user) => {
               }).format(patrimony)
             }
           </p>
-          <p>{totalPercentageGoal} %</p>
+          {
+            totalPercentageGoal <= 100 ?
+              <p>{totalPercentageGoal} %</p> :
+              <p style={{
+                color: "red"
+              }}>{totalPercentageGoal} %</p>
+          }
           <p>100 %</p>
         </div>
       </div>

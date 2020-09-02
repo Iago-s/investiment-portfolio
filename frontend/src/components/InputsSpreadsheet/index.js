@@ -14,6 +14,9 @@ const InputsSpreadsheet = (props) => {
       defaultValue={props.defaultValue}
       id={props.id}
       className="inputsSpreadsheet-component"
+      style={{
+        backgroundColor: props.color,
+      }}
     />
   );
 }

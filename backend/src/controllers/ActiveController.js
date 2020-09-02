@@ -37,7 +37,21 @@ module.exports = {
     const { user_id } = request.params;
     const { name, price, amount, patrimonyHere, percentageGoal, currentPercentage } = request.body;
 
-    console.log(currentPercentage);
+    console.log(request.body);
+
+    if(name === 'RF') {
+      const rf = await Active.create({
+        name,
+        price,
+        amount: 0,
+        patrimonyHere,
+        percentageGoal,
+        currentPercentage,
+        user_id: parseInt(user_id),
+      });
+
+      return response.json(rf);
+    }
 
     const active = await Active.create({
       name,
@@ -46,7 +60,7 @@ module.exports = {
       patrimonyHere,
       percentageGoal,
       currentPercentage,
-      user_id: parseInt(user_id)
+      user_id: parseInt(user_id),
     });
 
     return response.json(active);
@@ -54,6 +68,8 @@ module.exports = {
 
   async updateActive(request, response) {
     const { name, price, amount, patrimonyHere, percentageGoal, currentPercentage, active_id } = request.body;
+
+    console.log(request.body);
 
     const active = await Active.update({
       name,
@@ -68,9 +84,7 @@ module.exports = {
       } 
     });
 
-    console.log(active);
-
-    response.json(active[0]);
+    response.json(active);
   },
 
   async deleteActive(request, response) {
