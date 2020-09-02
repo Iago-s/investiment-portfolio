@@ -5,7 +5,9 @@ import './styles.css';
 
 import { RiAccountBoxFill } from 'react-icons/ri';
 import { ImExit } from 'react-icons/im';
+
 import ButtonAddRemove from '../../components/ButtonAddRemove';
+import InputsSpreadsheet from '../../components/InputsSpreadsheet';
 
 import api from '../../services/api';
 
@@ -124,43 +126,37 @@ const Wallet = (user) => {
 
       <div className="container-rebalance">
         <div className="container-actives">
-          <input 
+          <InputsSpreadsheet 
             id="ativo"
-            className="input-active"
             placeholder="Código"
-            required
+            required={true}
             value={name}
             onChange={event => setName(event.target.value)}
           />
-          <input 
-            className="input-active"
+          <InputsSpreadsheet 
             placeholder="Preço"
             value={price}
             readOnly={true}
           />
-          <input 
-            className="input-active"
+          <InputsSpreadsheet 
             placeholder="Quantidade"
             type="number"
             required
             onChange={event => setAmount(event.target.value)}
           />
-          <input 
-            className="input-active"
+          <InputsSpreadsheet 
             placeholder="Total R$"
             value={patrimonyHere}
             readOnly={true}
           />
-          <input 
-            className="input-active"
+          <InputsSpreadsheet 
             placeholder="Objetivo"
             type="number"
             required
             value={percentageGoal}
             onChange={event => setPercentageGoal(event.target.value)}
           />
-          <input 
-            className="input-active"
+          <InputsSpreadsheet 
             placeholder="Total %"
             value={currentPercentage}
             readOnly={true}
@@ -175,7 +171,7 @@ const Wallet = (user) => {
       <div className="container-spreadsheet">
         <div className="container-actives">
           <p>Patrimônio</p>
-          <input 
+          <InputsSpreadsheet 
             className="input-spreadsheet"
             readOnly={true}
             value={
@@ -204,14 +200,12 @@ const Wallet = (user) => {
           return(
             <div key={index} className="container-map-actives">
               <div className="map-actives" key={index}>
-                <input 
-                  className="input-active"
+                <InputsSpreadsheet 
                   placeholder="Código"
                   value={value.name}
                   readOnly={true}
                 />
-                <input 
-                  className="input-active"
+                <InputsSpreadsheet
                   placeholder="Preço"
                   value={
                     Intl.NumberFormat('PT-BR', {
@@ -221,8 +215,7 @@ const Wallet = (user) => {
                   }
                   readOnly={true}
                 />
-                <input 
-                  className="input-active"
+                <InputsSpreadsheet 
                   placeholder="Quantidade"
                   defaultValue={value.amount}
                   onChange={event => {
@@ -245,8 +238,7 @@ const Wallet = (user) => {
                     handleUpdateActive(data);
                   }}
                 />
-                <input 
-                  className="input-active"
+                <InputsSpreadsheet 
                   placeholder="Total R$"
                   value={
                     Intl.NumberFormat('PT-BR', {
@@ -256,8 +248,7 @@ const Wallet = (user) => {
                   }
                   readOnly={true}
                 />
-                <input 
-                  className="input-active"
+                <InputsSpreadsheet 
                   placeholder="Objetivo"
                   defaultValue={value.percentageGoal}
                   onChange={event => {
@@ -276,8 +267,7 @@ const Wallet = (user) => {
                     handleUpdateActive(data);
                   }}
                 />
-                <input 
-                  className="input-active"
+                <InputsSpreadsheet 
                   placeholder="Total %"
                   value={(value.currentPercentage = (value.patrimonyHere * 100) / patrimony).toFixed(2) + " %"}
                   readOnly={true}
@@ -294,7 +284,6 @@ const Wallet = (user) => {
               </div>
             </div>
           );
-          
         })
       }
 
