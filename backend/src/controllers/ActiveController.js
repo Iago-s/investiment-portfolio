@@ -17,16 +17,21 @@ module.exports = {
     }
 
     let patrimony = 0;
+    let percentageGoalTotal = 0;
 
-    const patrimonyHereValues = actives.active.map((value, index) => {
-      return value.patrimonyHere;
+    const arrayValues = actives.active.map((value, index) => {
+      return {
+        patrimonyHereValues: value.patrimonyHere,
+        percentageGoalValues: value.percentageGoal,
+      };
     });
 
-    for(let i = 0; i < patrimonyHereValues.length; i++) {
-      patrimony+= patrimonyHereValues[i];
+    for(let i = 0; i < arrayValues.length; i++) {
+      patrimony+= arrayValues[i].patrimonyHereValues;
+      percentageGoalTotal+= arrayValues[i].percentageGoalValues;
     }
 
-    return response.json( { actives: actives.active, patrimony });
+    return response.json( { actives: actives.active, patrimony, percentageGoalTotal });
   }, 
   async addActive(request, response) {
     const { user_id } = request.params;
@@ -85,7 +90,7 @@ module.exports = {
 
     console.log(name);
 
-    const actives = ['ABEV3', 'PGMN3', 'LAVV3', 'LJQQ3', 'DMVF3', 'SOMA3', 'RIVA3', 'AMBP3',
+    const actives = ['ENBR3', 'ABEV3', 'PGMN3', 'LAVV3', 'LJQQ3', 'DMVF3', 'SOMA3', 'RIVA3', 'AMBP3',
       'ALPK3', 'MTRE3', 'MDNE3', 'BDLL4', 'BDLL3', 'STBP3', 'RAPT4', 'RAPT3', 'EGIE3',
       'MMXM3', 'MMXM11', 'LUPA3', 'INEP3', 'INEP4', 'GEPA3', 'GEPA4', 'FRAS3', 'AFLT3',
       'SHUL3', 'SHUL4', 'TASA3', 'TASA4', 'TCSA3', 'UNIP3', 'WHRL4', 'WHRL3', 'OFSA3',
