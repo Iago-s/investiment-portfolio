@@ -4,15 +4,18 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import Register from './pages/Register';
 import Wallet from './pages/Wallet';
+import NotFound from './pages/NotFound';
 
 function Routes() {
   return(
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={WelcomePage} />
-        <Route path="/cadastrar" component={Register} />
+        <Route path="/cadastrar" exact component={Register} />
 
-        <Route path="/carteira" component={Wallet} />
+        <Route path="/carteira" exact component={Wallet} />
+
+        <Route path="/*" component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

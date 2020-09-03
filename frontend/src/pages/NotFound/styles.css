@@ -1,0 +1,23 @@
+.container-notFound {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  background-color: #F5F5F5;
+}
+
+.container-img {
+  width: 80%; 
+
+  display: flex;
+  
+  justify-content: center;
+  align-content: center;
+}
+
+.container-img img {
+  width: 300px;
+}
