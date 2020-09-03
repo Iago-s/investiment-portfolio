@@ -33,11 +33,10 @@ module.exports = {
 
     return response.json( { actives: actives.active, patrimony, percentageGoalTotal });
   }, 
+
   async addActive(request, response) {
     const { user_id } = request.params;
     const { name, price, amount, patrimonyHere, percentageGoal, currentPercentage } = request.body;
-
-    console.log(request.body);
 
     if(name === 'RF') {
       const rf = await Active.create({
@@ -69,8 +68,6 @@ module.exports = {
   async updateActive(request, response) {
     const { name, price, amount, patrimonyHere, percentageGoal, currentPercentage, active_id } = request.body;
 
-    console.log(request.body);
-
     const active = await Active.update({
       name,
       price, 
@@ -88,8 +85,6 @@ module.exports = {
   },
 
   async deleteActive(request, response) {
-    console.log(request.params);
-
     const activeDelete = await Active.destroy({
       where: {
         id: request.params.active_id
@@ -101,8 +96,6 @@ module.exports = {
 
   async getPriceActive(request, response) {
     const { name } = request.body;
-
-    console.log(name);
 
     const actives = ['ENBR3', 'ABEV3', 'PGMN3', 'LAVV3', 'LJQQ3', 'DMVF3', 'SOMA3', 'RIVA3', 'AMBP3',
       'ALPK3', 'MTRE3', 'MDNE3', 'BDLL4', 'BDLL3', 'STBP3', 'RAPT4', 'RAPT3', 'EGIE3',

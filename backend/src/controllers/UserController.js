@@ -1,7 +1,4 @@
-
-
 const User = require('../models/User');
-const Active = require('../models/Active');
 
 module.exports = {
   async login(request, response) {
