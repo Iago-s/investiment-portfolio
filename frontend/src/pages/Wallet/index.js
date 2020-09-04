@@ -152,7 +152,7 @@ const Wallet = (user) => {
     <div className="container-wallet">
       <div className="header-container-wallet">
         <header>
-          <button className="icons"><RiAccountBoxFill style={styleIcons} size={30}/></button>
+          <button className="icons" onClick={() => history.push('/perfil', user_id)}><RiAccountBoxFill style={styleIcons} size={30}/></button>
           <button className="icons" onClick={handleLogout}><ImExit style={styleIcons} size={30}/></button>
         </header>
       </div>

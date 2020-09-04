@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Active = require('../models/Active');
 
 module.exports = {
   async login(request, response) {
@@ -38,18 +39,43 @@ module.exports = {
     return response.json(user);
   },
 
-  async delete(request, response) {
-    const { id } = request.params;
+  async update(request, response) {
+    const { email, password, user_id } = request.body;
 
-    const userExist = await User.findByPk(id);
+    const userUpdate = await User.update({
+      email,
+      password
+    }, {
+      where: {
+        id: user_id,
+      }
+    });
 
-    if (!userExist) {
+    if(userUpdate[0] === 0) {
       return response.json({ error: true });
     }
 
+    const user = await User.findOne({
+      where: {
+        id: user_id
+      }
+    });
+
+    return response.json(user.dataValues);
+  },
+
+  async delete(request, response) {
+    const { user_id } = request.params;
+
     await User.destroy({
       where: {
-        id
+        id: user_id,
+      }
+    });
+
+    await Active.destroy({
+      where: {
+        user_id,
       }
     });
 

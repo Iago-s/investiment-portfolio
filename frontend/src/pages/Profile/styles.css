@@ -1,0 +1,46 @@
+.form-container img {
+  width: 80px;
+
+  margin-bottom: 20px;
+
+  border-radius: 8px;
+}
+
+textarea {
+  border: 1px solid #E8EAF2;
+  border-radius: 8px;
+
+  padding: 10px;
+  text-align: center;
+}
+
+footer {
+  width: 100%;
+  
+  position: absolute;
+  
+  bottom: 0;
+
+  background-color: #109B57;
+
+  display: flex;
+
+  justify-content: center;
+  align-content: center;
+}
+
+footer p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+footer p a {
+  font-size: 16px;
+  font-weight: bold;
+  color: #F5F5F5;
+
+  padding-left: 10px;
+}
+
+
+
