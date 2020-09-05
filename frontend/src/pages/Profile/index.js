@@ -13,6 +13,7 @@ import api from '../../services/api';
 const Profile = (user) => {
   const history = useHistory();
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -69,7 +70,19 @@ const Profile = (user) => {
   async function handleSendMessage(e) {
     e.preventDefault();
 
-    
+    const data = {
+      name,
+      email,
+      message,
+    };
+
+    const response = await api.post('http://localhost:3333/send-mail', data);
+
+    if(response.data.sucess) {
+      setName('');
+      setMessage('');
+      return alert('Email enviado com sucesso, agradecemos o seu contato.');
+    }
   }
 
   return(
@@ -102,6 +115,14 @@ const Profile = (user) => {
         <div className="form-container" style={{backgroundColor: "#E8EAF2"}}>
           <Logo/>
           <form onSubmit={handleSendMessage}>
+            <p>Nome</p>
+            <Input 
+              type="text" 
+              value={name}
+              onChange={e => setName(e.target.value)}
+
+              required
+            />
             <p>Seu email</p>
             <Input 
               type="email" 
