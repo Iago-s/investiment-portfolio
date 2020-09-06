@@ -2,6 +2,12 @@ const User = require('../models/User');
 const Active = require('../models/Active');
 
 module.exports = {
+  async index(request, response) {
+    const users = await User.findAll();
+
+    return response.json(users);
+  },
+
   async login(request, response) {
     const { email, password } = request.body;
 

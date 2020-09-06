@@ -48,6 +48,8 @@ const Wallet = (user) => {
 
       const response = await api.get(`http://localhost:3333/actives/${user_id.id}`);
 
+      console.log(response);
+
       setPatrimony(response.data.patrimony);
       setTotalPercentageGoal(response.data.percentageGoalTotal);
       setActives(response.data.actives);

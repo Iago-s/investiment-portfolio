@@ -30,8 +30,7 @@ const WelcomePage = () => {
 
       return alert('Usuario ou senha errado, tente novamente');
     }
-    console.log(response.data);
-
+    
     history.push('/carteira', response.data);
   }
   return(
