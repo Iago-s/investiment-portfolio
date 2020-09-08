@@ -53,6 +53,7 @@
 .container-rebalance {
   width: 100%;
 
+
   display: flex;
   flex-direction: row;
 
@@ -232,4 +233,38 @@
   text-align: center;
 
   background-color: #109B57;
+}
+
+@media(max-width: 450px) {
+  .container-wallet .header-container-wallet header {
+    justify-content: center;
+  }
+
+  .container-rebalance {
+    width: 100%;
+  }
+
+  .container-spreadsheet .container-actives{
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-header {
+    display: none;
+  }
+
+  .container-map-actives {
+    margin: auto;
+  }
+  .container-map-actives .map-actives {
+    margin: auto; 
+  }
+  
+  .container-footer {
+    display: none;
+  }
+
+  #patrimony {
+    width: 100px;
+  }
 }

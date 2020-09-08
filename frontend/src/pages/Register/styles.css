@@ -49,3 +49,27 @@
 .container-register .form-container-register  p {
   font-size: 14px;
 }
+
+@media(max-width: 550px) {
+  .container-register {
+    background-color: #E8EAF2;
+  }
+  
+  .container-register .form-container-register {
+    width: 100%;
+  }
+
+  .container-register .form-container-register form h1 {
+    font-size: 30px;
+  }
+
+  form {
+    width: 100%;
+  }
+}
+
+@media(max-width: 600px) {
+  .container-register .form-container-register form h1 {
+    font-size: 30px;
+  }
+}

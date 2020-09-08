@@ -250,6 +250,7 @@ const Wallet = (user) => {
         <div className="container-actives">
           <p>Patrimônio</p>
           <InputsSpreadsheet 
+            id="patrimony"
             className="input-spreadsheet"
             readOnly={true}
             value={

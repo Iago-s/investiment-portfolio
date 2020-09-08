@@ -60,3 +60,24 @@
 .register {
   font-size: 14px;
 }
+
+@media(max-width: 450px) {
+  .container .form-container{
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+  
+    margin: auto;
+  }
+
+  .img-container {
+    display: none;
+  }
+
+  .form-container {
+    width: 100%;
+
+    background-color: #E8EAF2;
+  }
+}

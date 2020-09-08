@@ -21,3 +21,9 @@
 .container-img img {
   width: 300px;
 }
+
+@media(max-width: 500px) {
+  .container-img img {
+    width: 70%;
+  }
+}

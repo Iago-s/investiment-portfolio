@@ -97,7 +97,7 @@ module.exports = {
   async getPriceActive(request, response) {
     const { name } = request.body;
 
-    const actives = ['ENBR3', 'ABEV3', 'PGMN3', 'LAVV3', 'LJQQ3', 'DMVF3', 'SOMA3', 'RIVA3', 'AMBP3',
+    const actives = ['EQTL3', 'ENBR3', 'ABEV3', 'PGMN3', 'LAVV3', 'LJQQ3', 'DMVF3', 'SOMA3', 'RIVA3', 'AMBP3',
       'ALPK3', 'MTRE3', 'MDNE3', 'BDLL4', 'BDLL3', 'STBP3', 'RAPT4', 'RAPT3', 'EGIE3',
       'MMXM3', 'MMXM11', 'LUPA3', 'INEP3', 'INEP4', 'GEPA3', 'GEPA4', 'FRAS3', 'AFLT3',
       'SHUL3', 'SHUL4', 'TASA3', 'TASA4', 'TCSA3', 'UNIP3', 'WHRL4', 'WHRL3', 'OFSA3',

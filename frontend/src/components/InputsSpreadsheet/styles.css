@@ -5,3 +5,22 @@
 
   text-align: center;
 }
+
+@media(max-width: 450px){
+  .inputsSpreadsheet-component {
+    width: 15%;
+  }
+}
+
+
+@media(max-width: 800px){
+  .inputsSpreadsheet-component {
+    width: 15%;
+  }
+}
+
+@media(max-width: 240px){
+  .inputsSpreadsheet-component {
+    width: 12%;
+  }
+}

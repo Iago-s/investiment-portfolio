@@ -19,3 +19,15 @@
 .buttonAddRemove-component:hover {
   opacity: 0.5;
 }
+
+@media(max-width: 450px) {
+  .buttonAddRemove-component {
+    width: 80px;
+  }
+}
+
+@media(max-width: 300px) {
+  .buttonAddRemove-component {
+    width: 70px;
+  }
+}
