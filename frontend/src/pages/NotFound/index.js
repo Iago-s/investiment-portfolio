@@ -8,7 +8,7 @@ const NotFound = () => {
   return(
     <div className="container-notFound">
       <div className="container-img">
-        <img src={pageNotFound} />
+        <img src={pageNotFound} alt="Imagem error 404"/>
       </div>
     </div>
   );

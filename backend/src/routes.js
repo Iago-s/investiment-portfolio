@@ -7,7 +7,10 @@ const ActiveController = require('./controllers/ActiveController');
 const EmailController = require('./controllers/EmailController');
 
 routes.get('/', (request, response) => {
-  response.send('<h1>Welcome investiment portfolios</h1>');
+  response.send(`<h1>
+    Api do website <a href="https://rebalance.com" target="_blank" >rebalance</a>
+    </h1>`
+  );
 });
 routes.post('/', UserController.login);
 routes.post('/cadastrar', UserController.register);

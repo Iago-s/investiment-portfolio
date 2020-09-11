@@ -6,12 +6,20 @@
   text-align: center;
 }
 
+.inputsSpreadsheet-component:read-only {
+  background-color: #E8EAF2;
+  border: 1px solid #CACEE1;
+}
+
+.inputsSpreadsheet-component:read-write {
+  cursor: pointer;
+}
+
 @media(max-width: 450px){
   .inputsSpreadsheet-component {
     width: 15%;
   }
 }
-
 
 @media(max-width: 800px){
   .inputsSpreadsheet-component {

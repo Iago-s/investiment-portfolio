@@ -5,7 +5,7 @@ module.exports = {
     const { name, email, message } = request.body;
 
     await trasporter.sendMail({
-      from: `${email}>`,
+      from: `${process.env.EMAIL}`,
       to: process.env.EMAIL,
 
       subject: `Contato: <${name}>`,

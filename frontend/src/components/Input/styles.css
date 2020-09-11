@@ -6,3 +6,7 @@
 
   text-align: center;
 }
+
+.input-component:valid {
+  border: 1px solid #12AB60;
+}

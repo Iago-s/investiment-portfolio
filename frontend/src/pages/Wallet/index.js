@@ -48,8 +48,6 @@ const Wallet = (user) => {
 
       const response = await api.get(`http://localhost:3333/actives/${user_id.id}`);
 
-      console.log(response);
-
       setPatrimony(response.data.patrimony);
       setTotalPercentageGoal(response.data.percentageGoalTotal);
       setActives(response.data.actives);
@@ -65,12 +63,17 @@ const Wallet = (user) => {
       return alert('Preencha o codigo, quantidade, e objetivo percentual do ativo.');
     }
 
+    if(amount < 0) {
+      setAmount('');
+      return alert('A quantidade não pode ser negativa');
+    }
+
     const response = await api.post('http://localhost:3333/carteira', { name });
 
     if(response.data.error) {
       setName('');
       setPrice(0);
-      setAmount(0);
+      setAmount('');
       setPatrimonyHere(0);
       setPercentageGoal('');
       setCurrentPercentage(0);
@@ -89,7 +92,7 @@ const Wallet = (user) => {
 
     setName('');
     setPrice(0);
-    setAmount(0);
+    setAmount('');
     setPatrimonyHere(0);
     setPercentageGoal('');
     setCurrentPercentage(0);
@@ -108,9 +111,16 @@ const Wallet = (user) => {
       return alert('Preencha o total aplicado R$ e objetivo percentual em renda fixa.');
     }
 
+    if(priceRF < 0) {
+      setPriceRF('');
+      return alert('O total aplicado não deve ser negativo');
+    }
+
+    const convertPriceRF = priceRF.replace(',', '.');
+
     const data = {
       name: nameRF,
-      price: eval(`${priceRF} + 0`),
+      price: eval(`${convertPriceRF} + 0`),
       amount: 0,
       patrimonyHere: eval(`${priceRF} + 0`),
       percentageGoal: eval(`${percentageGoalRF} + 0`),
@@ -166,7 +176,7 @@ const Wallet = (user) => {
             placeholder="Código"
             required={true}
             value={name}
-            onChange={event => setName(event.target.value)}
+            onChange={event => setName(event.target.value.toUpperCase())}
           />
           <InputsSpreadsheet 
             placeholder="Preço"
@@ -177,6 +187,7 @@ const Wallet = (user) => {
             placeholder="Quantidade"
             type="number"
             required
+            value={amount}
             onChange={event => setAmount(event.target.value)}
           />
           <InputsSpreadsheet 
@@ -217,7 +228,7 @@ const Wallet = (user) => {
             onChange={event => setPriceRF(event.target.value)}
           />
           <InputsSpreadsheet 
-            placeholder="Quantidade"
+            placeholder=""
             type="number"
             required
             readOnly={true}
