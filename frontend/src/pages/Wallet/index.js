@@ -38,6 +38,8 @@ const Wallet = (user) => {
   const [patrimony, setPatrimony] = useState(0);
   const [totalPercentageGoal, setTotalPercentageGoal] = useState(0);
 
+  const [carregou, setCarregou] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       if(user_id === undefined) {
@@ -51,6 +53,7 @@ const Wallet = (user) => {
       setPatrimony(response.data.patrimony);
       setTotalPercentageGoal(response.data.percentageGoalTotal);
       setActives(response.data.actives);
+      setCarregou(true);
     }
     
     fetchData();
@@ -151,6 +154,7 @@ const Wallet = (user) => {
     await api.post('http://localhost:3333/atualizar-ativo/', data);
 
     setUpdatePage(updatePage + 1);
+    setCarregou(false);
   }
 
   function handleLogout(e) {
@@ -158,7 +162,6 @@ const Wallet = (user) => {
 
     history.push('/');
   }
-
 
   return(
     <div className="container-wallet">
@@ -272,6 +275,12 @@ const Wallet = (user) => {
             }
           />
         </div>
+      </div>
+
+      <div className="container-loading">
+        {
+          carregou === false ? <p className="loading">Carregando...</p> : <p></p>
+        }
       </div>
 
       <div className="container-header">

@@ -16,6 +16,20 @@ module.exports = {
       return response.json({ error: true });
     }
 
+    for(let i = 0; i < actives.active.length; i++) {
+      if(actives.active[i].name !== 'RF') {
+        const data = await rp(`${process.env.LINK_STOCKS}${actives.active[i].name}`);
+
+        let $ = cheerio.load(data);
+        const price = $(`strong[class=value]`)[0].children[0].data;
+
+        const formatPrice = price.replace(',', '.');
+
+        actives.active[i].price = eval(`${formatPrice} + 0`);
+        actives.active[i].patrimonyHere = actives.active[i].price * actives.active[i].amount;
+      }
+    }
+
     let patrimony = 0;
     let percentageGoalTotal = 0;
 
