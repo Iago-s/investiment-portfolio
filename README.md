@@ -8,8 +8,8 @@ Portfolio rebalance
 <p align="center">Site para controlar os novos aportes em ativos do mercado financeiro brasileiros</p>
 
 <div align="center">
-  <img src="./frontend/src/assets/layout/desktop.png" alt="Desktop layout" width="500" height="425">
-  <img src="./frontend/src/assets/layout/home-page.png" alt="Home page layout" width="400" height="425">
+  <img src="./frontend/src/assets/layout/desktop.png" alt="Desktop layout"  height="425">
+  <img src="./frontend/src/assets/layout/home-page.png" alt="Home page layout"  height="425">
 </div>
 
 <hr />
