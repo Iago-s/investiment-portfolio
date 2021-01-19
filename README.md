@@ -1,6 +1,6 @@
 <h1 align="center">
 <br>
-  <img src="./frontend/src/assets/logo.png" alt="Logo rebalance" width="120">
+  <img src="./frontend/src/assets/logo.png" alt="Logo website Portfolio rebalance" width="120">
 <br>
 <br>
 Portfolio rebalance
